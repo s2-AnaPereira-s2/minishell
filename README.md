@@ -1,2 +1,2 @@
-# minishell
-42 project - minishell
+# bbshell
+Project minishell from 42
