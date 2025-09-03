@@ -10,7 +10,18 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-void get_tokens(char **argv)
+#include "minishell.h"
+
+void get_tokens(char *input)
 {
-    
+    char **lemex;
+    int i;
+
+    lemex = ft_split(input, ' ');
+    i = 0;
+    while (lemex[i])
+    {
+        printf("%s\n", lemex[i]);
+        i++;
+    }
 }

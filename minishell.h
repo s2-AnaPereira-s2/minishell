@@ -1,36 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gabrsouz <gabrsouz@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/06 11:09:26 by gabrsouz          #+#    #+#             */
-/*   Updated: 2025/05/19 16:32:40 by gabrsouz         ###   ########.fr       */
+/*   Created: 2025/08/19 14:04:06 by gabrsouz          #+#    #+#             */
+/*   Updated: 2025/08/19 14:05:37 by gabrsouz         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	unsigned int	i;
+#include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include <stdlib.h>
+#include "libft/libft.h"
 
-	i = 0;
-	while (s1[i] != '\0' || s2[i] != '\0')
-	{
-		if (s1[i] != s2[i])
-			return ((unsigned char) s1[i] - (unsigned char) s2[i]);
-		i++;
-	}
-	return (0);
-}
+void get_tokens(char *input);
 
-/*int	main (void)
-{
-	char s1 [7] = "Gabriel";
-	char s2 [5] = "Hsouz";
-	int size = 5;
-	
-	printf("%d", ft_strncmp (s1, s2, size));
-}*/
+#endif

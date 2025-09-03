@@ -3,49 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrsouz <gabrsouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/06 15:28:06 by gabrsouz          #+#    #+#             */
-/*   Updated: 2025/08/05 17:42:07 by gabrsouz         ###   ########.fr       */
+/*   Created: 2025/05/13 21:00:50 by ana-pdos          #+#    #+#             */
+/*   Updated: 2025/08/13 22:00:32 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-int	ft_atoi(const char *str)
+int	ft_atoi(const char *nbr)
 {
-	int	i;
-	int	number;
-	int	signal;
+	int	result;
+	int	sign;
 
-	i = 0;
-	number = 0;
-	signal = 1;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
-		i++;
-	if (str[i] == 43 || str[i] == 45)
+	sign = 1;
+	result = 0;
+	while (*nbr)
 	{
-		if (str[i] == 45)
-			signal = -1;
-		i++;
+		while (*nbr == ' ' || (*nbr >= 9 && *nbr <= 13))
+			nbr++;
+		if (*nbr == '+' || *nbr == '-')
+		{
+			if (*nbr == '-')
+				sign = -1;
+			nbr++;
+		}
+		while (*nbr >= '0' && *nbr <= '9')
+		{
+			result = (result * 10 + (*nbr++ - '0'));
+		}
+		return (result * sign);
 	}
-	if (!(str[i] >= 48 && str[i] <= 57))
-		return (0);
-	while (str[i] >= 48 && str[i] <= 57)
-	{
-		number = (number * 10 + (str[i] - '0'));
-		i++;
-	}
-	return (number * signal);
+	return (result * sign);
 }
-
-/*int main(void)
-{
-	printf("%d, ", ft_atoi("     o1khg"));
-	printf("%d, ", ft_atoi("   		+123"));
-	printf("%d, ", ft_atoi("   		++123"));
-	printf("%d, ", ft_atoi("   		-123"));
-	printf("%d, ", ft_atoi("   		123"));
-	printf("%d, ", ft_atoi("123a1"));
-}
-*/

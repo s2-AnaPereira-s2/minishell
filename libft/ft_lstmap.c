@@ -1,26 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/13 21:06:10 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/05/13 21:06:19 by ana-pdos         ###   ########.fr       */
+/*   Created: 2025/07/31 14:29:36 by ana-pdos          #+#    #+#             */
+/*   Updated: 2025/08/13 21:59:37 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isalpha(int c)
+t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 {
-	if ((c >= 'A' && c <= 'Z') 
-		|| (c >= 'a' && c <= 'z'))
+	t_list	*new;
+	t_list	*new_node;
+	void	*content;
+
+	new = NULL;
+	if (!lst || !f || !del)
+		return (NULL);
+	while (lst)
 	{
-		return (1);
+		content = f(lst->content);
+		new_node = ft_lstnew(content);
+		if (!new_node)
+		{
+			del(content);
+			return (ft_lstclear(&new, del), NULL);
+		}
+		ft_lstadd_back(&new, new_node);
+		lst = lst->next;
 	}
-	else
-	{
-		return (0);
-	}
+	return (new);
 }

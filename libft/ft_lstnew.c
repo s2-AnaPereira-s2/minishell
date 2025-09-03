@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/13 21:06:10 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/05/13 21:06:19 by ana-pdos         ###   ########.fr       */
+/*   Created: 2025/07/31 14:30:17 by ana-pdos          #+#    #+#             */
+/*   Updated: 2025/08/13 21:59:40 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isalpha(int c)
+t_list	*ft_lstnew(int *content)
 {
-	if ((c >= 'A' && c <= 'Z') 
-		|| (c >= 'a' && c <= 'z'))
-	{
-		return (1);
-	}
-	else
-	{
-		return (0);
-	}
+	t_list	*new;
+
+	new = malloc(sizeof(t_list));
+	if (new == NULL)
+		return (NULL);
+	new->content = content;
+	new->index = -1;
+	new->next = NULL;
+	return (new);
 }

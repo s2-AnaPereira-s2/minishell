@@ -3,42 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrsouz <gabrsouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 11:51:12 by gabrsouz          #+#    #+#             */
-/*   Updated: 2025/05/19 16:23:41 by gabrsouz         ###   ########.fr       */
+/*   Created: 2025/05/13 21:12:14 by ana-pdos          #+#    #+#             */
+/*   Updated: 2025/07/31 15:08:31 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	unsigned char	*a;
-	unsigned char	*b;
-	size_t			i;
+	unsigned char	*s;
+	unsigned char	*d;
 
-	a = (unsigned char *)dst;
-	b = (unsigned char *)src;
-	i = 0;
-	if (!dst && !src)
+	s = (unsigned char *)src;
+	d = (unsigned char *)dest;
+	if (!dest && !src)
 		return (NULL);
-	while (i < n)
+	while (n--)
 	{
-		a[i] = b[i];
-		i++;
+		*d++ = *s++;
 	}
-	return (dst);
+	return (dest);
 }
-
-/*int	main(void)
-{
-	int str [4] = {1, 2, 3, 4};
-	int src [4] =  {4, 1, 2, 3};
-	int size = sizeof(src);
-
-	printf("%d, ", ft_memcpy(str, src, size));
-	printf("%d, ", memcpy(str, src, size));
-	printf("%d", memmove(str, src, size));
-}
-*/

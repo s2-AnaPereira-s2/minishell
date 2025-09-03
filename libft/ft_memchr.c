@@ -3,36 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrsouz <gabrsouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 14:42:21 by gabrsouz          #+#    #+#             */
-/*   Updated: 2025/05/19 17:16:50 by gabrsouz         ###   ########.fr       */
+/*   Created: 2025/05/13 21:07:29 by ana-pdos          #+#    #+#             */
+/*   Updated: 2025/07/31 15:07:30 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	*ft_memchr(const void *s, int chr, size_t n)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	unsigned char	*a;
+	unsigned char	*src;
 	size_t			i;
 
-	a = (unsigned char *)s;
+	src = (unsigned char *)s;
 	i = 0;
 	while (i < n)
 	{
-		if (a[i] == (unsigned char)chr)
-			return (&a[i]);
+		if (src[i] == (unsigned char)c)
+			return (&src[i]);
 		i++;
 	}
 	return (NULL);
 }
-/*
-int	main(void)
-{
-	const void	*dest = "dezotoito";
-	int	agulha = 'o';
-
-	printf("%s\n", ft_memchr(dest, agulha, 3));
-	printf("%s", memchr(dest, agulha, 3));
-}//*/

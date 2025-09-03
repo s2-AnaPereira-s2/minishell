@@ -3,81 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrsouz <gabrsouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 14:12:58 by gabrsouz          #+#    #+#             */
-/*   Updated: 2025/05/21 14:32:20 by gabrsouz         ###   ########.fr       */
+/*   Created: 2025/05/13 21:14:07 by ana-pdos          #+#    #+#             */
+/*   Updated: 2025/05/20 20:55:18 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
+#include <stdio.h>
 #include "libft.h"
 
-char		*ft_substr(char const *src, unsigned int start, size_t len);
-static int	ft_start(char const *s1, char const *set);
-size_t		ft_strlen(const char *c);
-static int	ft_end(const char *s1, char const *set);
-char		*ft_strtrim(char const *s1, char const *set);
-
-static int	ft_start(char const *s1, char const *set)
+int	ft_start(const char *s1, const char *set)
 {
-	int	i;
+	int	start;
 	int	j;
 
-	i = 0;
-	while (s1[i] != '\0')
+	start = 0;
+	while (s1)
 	{
 		j = 0;
 		while (set[j] != '\0')
 		{
-			if (s1[i] != set[j])
+			if (s1[start] != set[j])
 				j++;
-			else if (s1[i] == set[j])
+			else if (s1[start] == set[j])
 				break ;
 		}
-		if (s1[i] != set[j])
+		if (s1[start] != set[j])
 			break ;
-		i++;
+		start++;
 	}
-	i++;
-	return (i - 1);
+	return (start);
 }
 
-static int	ft_end(char const *s1, char const *set)
+int	ft_end(const char *s1, const char *set)
 {
-	int		len;
-	int		j;
+	int	end;
+	int	j;
 
-	len = ft_strlen(s1);
-	while (len)
+	end = ft_strlen(s1);
+	while (s1)
 	{
 		j = 0;
 		while (set[j] != '\0')
 		{
-			if (s1[len] != set[j])
+			if (s1[end - 1] != set[j])
 				j++;
-			else if (s1[len] == set[j])
+			else if (s1[end - 1] == set[j])
 				break ;
 		}
-		if (s1[len] != set[j])
+		if (s1[end - 1] != set[j])
 			break ;
-		len--;
+		end--;
 	}
-	return (len + 1);
+	return (end);
 }
 
-char	*ft_strtrim(char const *s1, char const *set)
+char	*ft_strtrim(const char *s1, const char *set)
 {
-	int		start;
-	int		len;
+	int			start;
+	int			end;
+	char		*trim;
 
-	if (!s1 || !set)
-		return (0);
+	if (!s1)
+		return (NULL);
+	if (!set && set[0] == '\0')
+		return ((char *)s1);
+	end = ft_end(s1, set);
 	start = ft_start(s1, set);
-	len = ft_end(s1, set) - start;
-	return (ft_substr(s1, start, len));
+	trim = ft_substr(s1, start, (end - start));
+	return (trim);
 }
-
-/*int	main(void)
-{
-	printf("%s", ft_strtrim("lorem ipsum dolor sit amet", "te"));
-}*/

@@ -1,18 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrsouz <gabrsouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/19 14:04:06 by gabrsouz          #+#    #+#             */
-/*   Updated: 2025/08/19 14:05:37 by gabrsouz         ###   ########.fr       */
+/*   Created: 2025/07/31 14:27:05 by ana-pdos          #+#    #+#             */
+/*   Updated: 2025/08/13 21:59:20 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINESHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
+void	ft_lstclear(t_list **lst, void (*del)(void *))
+{
+	t_list	*temp;
+	t_list	*next;
 
-
-#endif
+	temp = *lst;
+	while (temp)
+	{
+		next = temp->next;
+		del(temp->content);
+		free(temp);
+		temp = next;
+	}
+	*lst = NULL;
+}

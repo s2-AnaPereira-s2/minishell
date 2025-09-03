@@ -1,45 +1,35 @@
-NAME		= minishell
-CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
-RM			= rm -f
-LIBFT_DIR	= ./libft
-LIBFT		= $(LIBFT_DIR)/libft.a
 
-INCLUDE = -Iinclude -I$(LIBFT_DIR)
+NAME = minishell
 
-SRCS		= \
-				src/
-				
-OBJS = $(SRCS:src/%.c=obj/%.o)
-GREEN		= \033[0;32m
-GREY		= \033[0;90m
-RED			= \033[0;31m
-RESET		= \033[0m
+CC = cc
+CFLAGS = -Wall -Werror -Wextra
+LIBS    = -lreadline -lncurses
+INCLUDES = -I. -I$(LIBFT_DIR) 
+LIBFT_DIR = libft
+LIBFT_LIB = $(LIBFT_DIR)/libft.a
+
+CFILES = minishell.c tokenizing.c
+OFILES = $(CFILES:.c=.o)
+
+.PHONY: all clean fclean re 
 
 all: $(NAME)
 
-$(LIBFT):
-	@echo "$(GREY)Compiling libft...$(RESET)"
+$(LIBFT_LIB):
 	$(MAKE) -C $(LIBFT_DIR)
 
-$(NAME): $(LIBFT) $(OBJS) include/minishell.h 
-	@$(CC) $(CFLAGS) $(OBJS) $(INCLUDE) $(LIBFT) -o $(NAME)
-	@echo "$(GREEN)Executable created: $(NAME)$(RESET)"
+$(NAME): $(OFILES) $(LIBFT_LIB) 
+	$(CC) $(CFLAGS) $(INCLUDES) $(OFILES) $(LIBFT_LIB) -o $(NAME) $(LIBS)
 
-obj/%.o: src/%.c include/minishell.h $(LIBFT_DIR)/libft.h
-	@mkdir -p obj
-	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+%.o: %.c minishell.h
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
-	$(RM) $(OBJS)
-	$(RM) -r obj
-	$(MAKE) -C $(LIBFT_DIR) clean
-	@echo "$(RED)Cleaned object files.$(RESET)"
+	rm -f $(OFILES)
+	$(MAKE) clean -C $(LIBFT_DIR)
 
 fclean: clean
-	$(RM) $(NAME)
-	$(MAKE) -C $(LIBFT_DIR) fclean
-	@echo "$(RED)Fully cleaned everything.$(RESET)"
-re: fclean all
+	rm -f $(NAME)
+	$(MAKE) fclean -C $(LIBFT_DIR)
 
-.PHONY: all clean fclean re run valgrind
+re: fclean all

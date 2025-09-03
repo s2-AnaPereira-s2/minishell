@@ -3,38 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrsouz <gabrsouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/06 12:10:01 by gabrsouz          #+#    #+#             */
-/*   Updated: 2025/05/20 17:56:10 by gabrsouz         ###   ########.fr       */
+/*   Created: 2025/05/13 21:13:44 by ana-pdos          #+#    #+#             */
+/*   Updated: 2025/05/20 21:10:46 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strrchr(const char *str, int chr)
+char	*ft_strrchr(const char *s, int c)
 {
 	int	i;
 
-	i = 0;
-	while (str[i] != '\0')
-		i++;
-	while (i != 0)
+	i = ft_strlen(s);
+	while (i >= 0)
 	{
-		if (str[i] == (unsigned char)chr)
-			return ((char *)&str[i]);
+		if (s[i] == (unsigned char) c)
+			return ((char *)&s[i]);
 		i--;
 	}
-	if (str[i] == (unsigned char)chr)
-		return ((char *)&str[i]);
 	return (NULL);
 }
-
-/*int	main(void)
-{
-	char	dest[] = "dezotoitu";
-	int	agulha = 'o';
-
-	printf("%s\n", ft_strrchr(dest, agulha));
-	printf("%s", strrchr(dest, agulha));
-}*/

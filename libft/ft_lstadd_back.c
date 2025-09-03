@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/13 21:06:10 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/05/13 21:06:19 by ana-pdos         ###   ########.fr       */
+/*   Created: 2025/07/31 14:25:18 by ana-pdos          #+#    #+#             */
+/*   Updated: 2025/07/31 14:32:28 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_isalpha(int c)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	if ((c >= 'A' && c <= 'Z') 
-		|| (c >= 'a' && c <= 'z'))
+	t_list	*temp;
+
+	temp = *lst;
+	if (!*lst)
 	{
-		return (1);
+		*lst = new;
+		return ;
 	}
-	else
-	{
-		return (0);
-	}
+	while (temp->next != NULL)
+		temp = temp->next;
+	temp->next = new;
 }

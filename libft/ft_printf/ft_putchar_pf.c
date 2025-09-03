@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_putchar_pf.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/13 21:06:10 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/05/13 21:06:19 by ana-pdos         ###   ########.fr       */
+/*   Created: 2025/05/16 12:27:26 by ana-pdos          #+#    #+#             */
+/*   Updated: 2025/08/13 21:55:39 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
+#include <unistd.h>
 
-int	ft_isalpha(int c)
+int	ft_putchar_pf(char c)
 {
-	if ((c >= 'A' && c <= 'Z') 
-		|| (c >= 'a' && c <= 'z'))
-	{
-		return (1);
-	}
-	else
-	{
-		return (0);
-	}
+	write(1, &c, 1);
+	return (1);
 }

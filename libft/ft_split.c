@@ -3,97 +3,84 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrsouz <gabrsouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 14:43:58 by gabrsouz          #+#    #+#             */
-/*   Updated: 2025/05/21 15:52:48 by gabrsouz         ###   ########.fr       */
+/*   Created: 2025/05/13 21:12:44 by ana-pdos          #+#    #+#             */
+/*   Updated: 2025/07/31 15:09:26 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char		*ft_substr(const char *src, unsigned int start, size_t len);
-static int	ft_nwords(const char *s, char c);
-size_t		ft_strlen(const char *c);
-char		**ft_split(const char *s, char c);
-static void	*free_all(char **arr, int j);
-
-static int	ft_nwords(const char *s, char c)
+static int	ft_total_words(char const *s, char c)
 {
-	int	i;
-	int	n;
+	int		total_words;
+	int		i;
 
 	i = 0;
-	n = 0;
+	total_words = 0;
+	if (s[0] != '\0' && s[0] != c)
+		total_words++;
 	while (s[i] != '\0')
 	{
-		if (s[i] != c && i == 0)
-			n = 1;
-		if (s[i] == c && s[i + 1] != '\0' && s[i + 1] != c)
-			n++;
-		i++;
+		if (s[i] == c && s[i + 1] != c && s[i + 1] != '\0')
+		{
+			i++;
+			total_words++; 
+		}
+		else
+			i++;
 	}
-	return (n);
+	return (total_words);
 }
 
-static void	*free_all(char **arr, int j)
+static int	ft_start(char const *s, char c, int i)
 {
-	while (j >= 0)
+	while (s[i] == c && s[i] != '\0') 
+		i++;
+	return (i);
+}
+
+static int	ft_end(char const *s, char c, int start)
+{
+	while (s[start] && s[start] != c)
+		start++;
+	return (start);
+}
+
+static char	**ft_free_split(char **split, int index)
+{
+	while (--index >= 0)
 	{
-		free(arr[j]);
-		j--;
+		free(split[index]);
 	}
-	free(arr);
+	free(split);
 	return (NULL);
 }
 
-char	**ft_split(const char *s, char c)
+char	**ft_split(char const *s, char c)
 {
-	int		i;
-	int		words;
-	int		id_array;
-	char	**array;
+	char	**split;
 	int		start;
+	int		index;
+	int		i;
 
-	i = 0;
-	words = ft_nwords(s, c);
-	array = (char **)malloc(sizeof (char *) * (words + 1));
-	if (!array)
+	split = ft_calloc(ft_total_words(s, c) + 1, sizeof(char *));
+	if (!split)
 		return (NULL);
-	id_array = 0;
-	while (s[i] != '\0' && id_array < words)
+	index = 0;
+	i = 0;
+	while (s[i] != '\0')
 	{
-		while (s[i] == c && s[i] != '\0')
-			i++;
-		start = i;
-		while (s[i] != c && s[i] != '\0')
-			i++;
-		array[id_array] = ft_substr(s, start, i - start);
-		if (!array[id_array++])
-			return (free_all(array, id_array - 1));
+		start = ft_start(s, c, i);
+		if (start == (int)ft_strlen(s))
+			break ;
+		i = ft_end(s, c, start);
+		split[index] = ft_substr(s, start, i - start);
+		if (!split[index])
+			return (ft_free_split(split, index));
+		index++;
 	}
-	array[id_array] = NULL;
-	return (array);
+	split[index] = NULL;
+	return (split);
 }
-
-/*int main()
-{
-    char **result;
-    int i;
-    result = ft_split("Ana Paula ", (char)' ');
-    if (!result)
-        return (1);
-    i = 0;
-    while (result[i])
-    {
-        free(result[i]);
-        i++;
-    }
-    free(result);
-    return (0);
-}*/
-
-/*int	main(void)
-{
-	ft_split("adipiscing elit", 'i');
-}*/

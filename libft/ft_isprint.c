@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_isprint.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrsouz <gabrsouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/06 09:55:04 by gabrsouz          #+#    #+#             */
-/*   Updated: 2025/05/14 10:50:44 by gabrsouz         ###   ########.fr       */
+/*   Created: 2025/05/13 21:07:14 by ana-pdos          #+#    #+#             */
+/*   Updated: 2025/05/13 21:07:20 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,12 @@
 
 int	ft_isprint(int c)
 {
-	if (c >= 32 && c <= 126)
+	if (32 <= c && c <= 126)
+	{
 		return (1);
-	return (0);
+	}
+	else
+	{
+		return (0);
+	}
 }
-
-/*int	main (void)
-{
-	printf("%d", ft_isprint('c'));
-	printf("%d", ft_isprint('8'));
-	printf("%d", ft_isprint(1));
-}*/

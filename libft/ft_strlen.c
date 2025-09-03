@@ -3,26 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrsouz <gabrsouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/06 09:55:33 by gabrsouz          #+#    #+#             */
-/*   Updated: 2025/05/15 14:01:06 by gabrsouz         ###   ########.fr       */
+/*   Created: 2025/05/13 21:13:24 by ana-pdos          #+#    #+#             */
+/*   Updated: 2025/05/20 17:05:29 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *c)
+size_t	ft_strlen(const char *s)
 {
 	int	i;
 
 	i = 0;
-	while (c[i] != '\0')
+	while (s[i] != '\0')
 		i++;
 	return (i);
 }
-
-/*int	main (void)
-{
-	printf("%d", ft_strlen("Gabriel"));
-}*/

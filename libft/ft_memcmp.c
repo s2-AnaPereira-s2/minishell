@@ -3,39 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrsouz <gabrsouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 14:49:34 by gabrsouz          #+#    #+#             */
-/*   Updated: 2025/05/15 11:57:03 by gabrsouz         ###   ########.fr       */
+/*   Created: 2025/05/13 21:10:48 by ana-pdos          #+#    #+#             */
+/*   Updated: 2025/07/31 15:08:26 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_memcmp(const void *str1, const void *str2, size_t n)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	unsigned char	*a;
-	unsigned char	*b;
-	unsigned int	i;
+	const unsigned char	*a = (const unsigned char *)s1;
+	const unsigned char	*b = (const unsigned char *)s2;
 
-	a = (unsigned char *)str1;
-	b = (unsigned char *)str2;
-	i = 0;
-	while (i < n)
+	while (n--)
 	{
-		if (a[i] != b[i])
-			return (a[i] - b[i]);
-		i++;
+		if (*a != *b)
+			return (*a - *b);
+		a++;
+		b++;
 	}
 	return (0);
 }
-
-/*int	main(void)
-{
-	char dst [6] = "oieeoo";
-	char src [5] =  "oieeo";
-	int size = sizeof(src);
-
-	printf("%d, ", ft_memcmp(dst, src, size));
-	printf("%d", memcmp(dst, src, size));
-}*/

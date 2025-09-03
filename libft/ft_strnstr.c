@@ -3,46 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrsouz <gabrsouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/06 11:30:02 by gabrsouz          #+#    #+#             */
-/*   Updated: 2025/05/20 18:25:26 by gabrsouz         ###   ########.fr       */
+/*   Created: 2025/05/13 21:13:36 by ana-pdos          #+#    #+#             */
+/*   Updated: 2025/05/20 21:07:20 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strnstr(const char *str, const char *to_find, size_t n)
+char	*ft_strnstr(const char *big, const char *little, size_t len)
 {
-	unsigned int	i;
-	unsigned int	j;
+	size_t	i;
+	size_t	j;
 
+	if (!*little)
+		return ((char *)big);
 	i = 0;
-	if (!*to_find || to_find[i] == '\0')
-		return ((char *)str);
-	while (str[i] && i < n)
+	while (big[i] && i < len)
 	{
 		j = 0;
-		while (to_find[j] != '\0' && i + j < n)
+		if (big[i] == little[j])
 		{
-			if (str[i + j] == to_find[j])
+			while (little[j] && (i + j < len) && big[i + j] == little[j])
+			{
+				if (little[j + 1] == '\0')
+					return ((char *)&big[i]);
 				j++;
-			else if (str[i] != to_find[j])
-				break ;
+			}
 		}
-		if (to_find[j] == '\0')
-			return ((char *)&str[i]);
 		i++;
 	}
 	return (NULL);
 }
-
-/*int	main(void)
-{
-	char	dest[] = "dezotoito";
-	char	agulha[] = "oi";
-	int		size = 7;
-
-	printf("%s\n", ft_strnstr(dest, agulha, size));
-	//printf("%d", strnstr(dest, agulha, size));
-}*/

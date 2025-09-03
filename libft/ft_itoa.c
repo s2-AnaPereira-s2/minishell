@@ -3,63 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrsouz <gabrsouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/09 15:46:21 by gabrsouz          #+#    #+#             */
-/*   Updated: 2025/05/21 14:33:16 by gabrsouz         ###   ########.fr       */
+/*   Created: 2025/05/15 10:40:07 by ana-pdos          #+#    #+#             */
+/*   Updated: 2025/05/20 15:54:43 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
-static int	ft_nbrlen(int n);
-char		*ft_itoa(int n);
-
-static int	ft_nbrlen(int n)
+int	ft_length(int n)
 {
-	int	len;
+	int	count;
 
-	if (n == 0)
-		return (1);
-	len = 0;
+	count = 0;
+	if (n == -2147483648)
+		return (count = 11);
 	if (n < 0)
-		len++;
-	while (n) 
 	{
-		n = n / 10;
-		len++;
+		n *= -1;
+		count++;
 	}
-	return (len);
+	if (n < 9)
+	{
+		count++;
+		return (count);
+	}
+	while (n != 0)
+	{
+		n /= 10;
+		count++;
+	}
+	return (count);
+}
+
+char	*ft_intmin(char *number)
+{
+	char	*intmin;
+
+	intmin = "-2147483648";
+	number = ft_memcpy(number, intmin, 11);
+	return (number);
 }
 
 char	*ft_itoa(int n)
 {
-	char		*nbr;
-	int			len;
-	long int	nb;
+	char	*number;
+	int		size;
 
-	nb = n;
-	len = ft_nbrlen(n);
-	nbr = (char *)malloc((len + 1) * sizeof(char));
-	if (!nbr)
+	size = ft_length(n);
+	number = malloc((size + 1) * sizeof(char));
+	if (!number)
 		return (NULL);
-	nbr[len] = '\0';
-	if (nb == 0)
-		nbr[0] = '0';
-	if (nb < 0)
+	number[size] = '\0';
+	if (n == -2147483648)
+		number = ft_intmin(number);
+	if (n < 0)
 	{
-		nb = -nb;
-		nbr[0] = '-';
+		n *= -1;
+		number[0] = '-';
 	}
-	while (len-- && nb > 0)
+	if (n == 0)
+		number[0] = '0';
+	while (n > 0)
 	{
-		nbr[len] = (nb % 10) + '0';
-		nb = nb / 10;
+		number[(size--) - 1] = (n % 10) + '0';
+		n /= 10;
 	}
-	return (nbr);
+	return (number);
 }
-
-/*int	main(void)
-{
-	printf("%s", ft_itoa(21));
-}*/

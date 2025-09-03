@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_toupper.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrsouz <gabrsouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/06 12:01:36 by gabrsouz          #+#    #+#             */
-/*   Updated: 2025/05/19 10:45:07 by gabrsouz         ###   ########.fr       */
+/*   Created: 2025/05/13 21:14:28 by ana-pdos          #+#    #+#             */
+/*   Updated: 2025/05/20 21:13:30 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,8 @@
 int	ft_toupper(int c)
 {
 	if (c >= 97 && c <= 122)
-		c -= 32;
+	{
+		c = c - 32;
+	}
 	return (c);
 }
-
-/*#include <stdio.h>
-
-int	main(void)
-{
-	printf("%c", toupper('g'));
-}*/

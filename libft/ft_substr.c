@@ -3,45 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrsouz <gabrsouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/08 11:45:41 by gabrsouz          #+#    #+#             */
-/*   Updated: 2025/05/20 17:50:25 by gabrsouz         ###   ########.fr       */
+/*   Created: 2025/05/13 21:14:15 by ana-pdos          #+#    #+#             */
+/*   Updated: 2025/07/31 15:10:08 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_substr(char const *src, unsigned int start, size_t len)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char			*str;
-	unsigned int	i;
+	char	*substr;
+	int		i;
 
-	if (!src)
+	if (!s)
+		return (NULL);
+	if (start >= ft_strlen(s))
+	{
+		substr = malloc(sizeof(char));
+		if (!substr)
+			return (NULL);
+		substr[0] = '\0';
+		return (substr);
+	}
+	if (len > ft_strlen(s) - start)
+		len = ft_strlen(s) - start;
+	substr = malloc((len + 1) * sizeof(char));
+	if (!substr)
 		return (NULL);
 	i = 0;
-	if (start > ft_strlen(src))
-	{
-		str = malloc(sizeof(char));
-		if (!str)
-			return (NULL);
-		str[i] = '\0';
-		return (str);
-	}
-	if (len > ft_strlen(src) - start)
-		len = ft_strlen(src) - start;
-	str = (char *)malloc((len + 1) * sizeof(char));
-	if (!str)
-		return (NULL);
 	while (len--)
-		str[i++] = src[start++];
-	str[i] = '\0';
-	return (str);
+	{
+		substr[i++] = s[start++];
+	}
+	substr[i] = '\0';
+	return (substr);
 }
-
-/*int	main(void)
-{
-	char *src = "lorem ipsum dolor sit amet";
-
-	printf("%s", ft_substr(src, 0, 10));
-}*/

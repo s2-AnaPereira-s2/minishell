@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrsouz <gabrsouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/07 12:03:28 by gabrsouz          #+#    #+#             */
-/*   Updated: 2025/05/19 16:24:25 by gabrsouz         ###   ########.fr       */
+/*   Created: 2025/05/13 21:12:22 by ana-pdos          #+#    #+#             */
+/*   Updated: 2025/07/31 15:08:35 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,24 @@
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	unsigned char	*a;
-	unsigned char	*b;
+	unsigned char	*s;
+	unsigned char	*d;
 
-	a = (unsigned char *)dest;
-	b = (unsigned char *)src;
-	if (dest < src)
-		ft_memcpy(dest, src, n);
-	if (dest > src)
+	s = (unsigned char *)src;
+	d = (unsigned char *)dest;
+	if (!dest && !src)
+		return (NULL);
+	if (d < s)
 	{
 		while (n--)
-			a[n] = b[n];
+			*d++ = *s++;
+	}
+	else
+	{
+		d += n;
+		s += n;
+		while (n--) 
+			*--d = *--s;
 	}
 	return (dest);
 }
-
-/*int	main(void)
-{
-	printf("%s", ft_memmove("oie", "lorem ipum dolor sit a", 22));
-	printf("%s", memmove("oie", "lorem ipum dolor sit a", 22));
-}*/

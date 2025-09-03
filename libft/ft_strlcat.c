@@ -3,46 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrsouz <gabrsouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/06 09:56:22 by gabrsouz          #+#    #+#             */
-/*   Updated: 2025/05/19 13:35:35 by gabrsouz         ###   ########.fr       */
+/*   Created: 2025/05/13 21:13:09 by ana-pdos          #+#    #+#             */
+/*   Updated: 2025/07/31 15:09:47 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <bsd/string.h>
 
 size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	unsigned long int	i;
-	unsigned long int	j;	
-	unsigned long int	strl;
+	size_t	i;
+	size_t	j;
+	size_t	dst_len;
+	size_t	src_len;
 
-	j = 0;
-	strl = ft_strlen(dst);
-	i = strl;
+	i = 0;
+	while (dst[i] != '\0' && i < size)
+		i++;
+	dst_len = i;
+	src_len = ft_strlen(src);
+	if (dst_len >= size)
+		return (size + src_len);
 	if (size > 0)
 	{
-		while (src[j] != '\0' && j + i < size - 1)
+		j = 0;
+		while (src[j] && (dst_len + j < size - 1))
 		{
-			dst[i + j] = src[j];
+			dst[dst_len + j] = src[j];
 			j++;
 		}
-		dst[i + j] = '\0';
+		dst[dst_len + j] = '\0';
 	}
-	if (size <= strl)
-		return (size + ft_strlen(src));
-	else
-		return (strl + ft_strlen(src));
+	return (dst_len + src_len);
 }
-
-/*int	main (void)
-{
-	char dest[14] = "a";
-
-	printf("%zu", ft_strlcat(dest, "lorem ipsum dolor sit amet", 15));
-	printf("%s\n", dest);
-	printf("%zu", strlcat(dest, "lorem ipsum dolor sit amet", 15));
-	printf("%s", dest);
-}*/

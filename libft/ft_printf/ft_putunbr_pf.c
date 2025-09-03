@@ -1,26 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isalpha.c                                       :+:      :+:    :+:   */
+/*   ft_putunbr_pf.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/13 21:06:10 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/05/13 21:06:19 by ana-pdos         ###   ########.fr       */
+/*   Created: 2025/06/04 19:30:49 by ana-pdos          #+#    #+#             */
+/*   Updated: 2025/08/13 21:56:38 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
+#include <unistd.h>
 
-int	ft_isalpha(int c)
+static int	ft_unsigned_length(unsigned int n)
 {
-	if ((c >= 'A' && c <= 'Z') 
-		|| (c >= 'a' && c <= 'z'))
-	{
+	int	count;
+
+	count = 0;
+	if (n == 0)
 		return (1);
-	}
-	else
+	while (n != 0)
 	{
-		return (0);
+		n /= 10;
+		count++;
 	}
+	return (count);
+}
+
+int	ft_putunbr_pf(unsigned int n)
+{
+	char	c;
+
+	if (n > 9)
+		ft_putunbr_pf(n / 10);
+	c = (n % 10) + '0';
+	write(1, &c, 1);
+	return (ft_unsigned_length(n));
 }

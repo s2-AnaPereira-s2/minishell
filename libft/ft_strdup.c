@@ -3,36 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gabrsouz <gabrsouz@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/12 15:30:25 by gabrsouz          #+#    #+#             */
-/*   Updated: 2025/05/15 12:01:28 by gabrsouz         ###   ########.fr       */
+/*   Created: 2025/05/13 21:12:55 by ana-pdos          #+#    #+#             */
+/*   Updated: 2025/07/31 15:09:36 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *src)
+char	*ft_strdup(const char *s)
 {
-	int		n;
+	char	*src_c;
 	int		i;
-	char	*dup;
 
 	i = 0;
-	n = ft_strlen(src);
-	dup = (char *)malloc(n + 1 * sizeof(char));
-	if (!dup)
-		return (0);
-	while (src[i])
+	while (s[i] != '\0')
+		i++;
+	src_c = (char *)malloc((i + 1) * sizeof(char));
+	if (!src_c)
+		return (NULL);
+	i = 0;
+	while (s[i] != '\0')
 	{
-		dup[i] = src[i];
+		src_c[i] = s[i];
 		i++;
 	}
-	dup[i] = '\0';
-	return (dup);
+	src_c[i] = '\0';
+	if (!src_c)
+		return (NULL);
+	return (src_c);
 }
-
-/*int	main(void)
-{
-	printf("%s\n", ft_strdup("Gabriel"));
-}*/
