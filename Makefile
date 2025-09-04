@@ -21,7 +21,7 @@ $(LIBFT_LIB):
 $(NAME): $(OFILES) $(LIBFT_LIB) 
 	$(CC) $(CFLAGS) $(INCLUDES) $(OFILES) $(LIBFT_LIB) -o $(NAME) $(LIBS)
 
-%.o: %.c minishell.h
+%.o: %.c parsing.h
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 clean:

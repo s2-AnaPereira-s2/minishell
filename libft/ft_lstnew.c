@@ -6,13 +6,13 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/31 14:30:17 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/08/13 21:59:40 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/04 17:56:29 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-t_list	*ft_lstnew(int *content)
+t_list	*ft_lstnew(char *content)
 {
 	t_list	*new;
 
@@ -20,7 +20,6 @@ t_list	*ft_lstnew(int *content)
 	if (new == NULL)
 		return (NULL);
 	new->content = content;
-	new->index = -1;
 	new->next = NULL;
 	return (new);
 }
