@@ -6,66 +6,109 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 18:42:57 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/09/04 19:26:39 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/05 11:39:28 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
 
-/*void print_list(t_list *lst)
+/*const char *token_type_name(t_token_type type)
 {
-    while (lst)
+    if (type == TOKEN_WORD)        return "WORD";
+    if (type == TOKEN_PIPE)        return "PIPE";
+    if (type == TOKEN_REDIR_IN)    return "REDIR_IN";
+    if (type == TOKEN_REDIR_OUT)   return "REDIR_OUT";
+    if (type == TOKEN_APPEND)      return "APPEND";
+    if (type == TOKEN_HEREDOC)     return "HEREDOC";
+    return "UNKNOWN";
+}
+
+void print_tokens(t_tokens *tokens)
+{
+    while (tokens)
     {
-        printf("%s\n", (char *)lst->content);
-        lst = lst->next;
+        printf("Type=%s | Value=%s\n", token_type_name(tokens->type), tokens->value);
+        tokens = tokens->next;
     }
 }*/
 
-void tokenizing(t_token *token)
-{
-    t_list *temp;
 
-    temp = token->lexemes;
-    while (temp)
-    {
-        if (ft_strncmp((char *)temp->content, "|", 1) == 0)
-            ft_lstadd_back(&token->TOKEN_PIPE, ft_lstnew(temp->content));
-        else if (ft_strncmp((char *)temp->content, ">>", 2) == 0)
-            ft_lstadd_back(&token->TOKEN_APPEND, ft_lstnew(temp->content));
-        else if (ft_strncmp((char *)temp->content, "<<", 2) == 0)
-            ft_lstadd_back(&token->TOKEN_HEREDOC, ft_lstnew(temp->content));
-        else if (ft_strncmp((char *)temp->content, "<", 1) == 0)
-            ft_lstadd_back(&token->TOKEN_REDIR_IN, ft_lstnew(temp->content));
-        else if (ft_strncmp((char *)temp->content, ">", 1) == 0)
-            ft_lstadd_back(&token->TOKEN_REDIR_OUT, ft_lstnew(temp->content));
-        else
-            ft_lstadd_back(&token->TOKEN_WORD, ft_lstnew(temp->content));
-        temp = temp->next;
-    }
+void get_token_type(t_tokens *token_node)
+{
+    if (!token_node)
+        return ;
+    if (ft_strncmp(token_node->value, "|", 1) == 0)
+        token_node->type = TOKEN_PIPE;
+    else if (ft_strncmp(token_node->value, ">>", 2) == 0)
+        token_node->type = TOKEN_APPEND;
+    else if (ft_strncmp(token_node->value, "<<", 2) == 0)
+        token_node->type = TOKEN_HEREDOC;
+    else if (ft_strncmp(token_node->value, "<", 1) == 0)
+        token_node->type = TOKEN_REDIR_IN;
+    else if (ft_strncmp(token_node->value, ">", 1) == 0)
+        token_node->type = TOKEN_REDIR_OUT;
+    else
+        token_node->type = TOKEN_WORD;
 }
 
+void    get_token_value(t_list *lexemes, t_tokens **tokens)
+{
+    t_list *temp;
+    t_tokens *last;
 
-void get_lexemes(t_token *token, char *input)
+    temp = lexemes;
+    last = NULL;
+    while (temp)
+    {
+        t_tokens *token_node;
+        char *lexeme;
+        lexeme = (char *)temp->content;
+        token_node = malloc(sizeof(t_tokens));
+        if (!token_node)
+            return ;
+        token_node->value = ft_strdup(lexeme);
+        token_node->next = NULL;
+        get_token_type(token_node);
+        if (!*tokens)
+            *tokens = token_node;
+        else
+            last->next = token_node;
+        last = token_node;
+        temp = temp->next;
+    }
+    //print_tokens(*tokens);
+}
+
+int get_start(char *input, int i)
+{
+    int start;
+
+    while (input[i] && input[i] == ' ')
+        i++;
+    start = i;
+    return start;
+}
+
+void get_lexemes(t_list **lexemes, t_tokens **tokens, char *input)
 {
     int i;
     int start;
 
-    start = 0;
     i = 0;
-    token->lexemes = NULL;
     while (input[i])
     {
-        while (input[i] == ' ')
-            i++;
-        start = i;
+        start = get_start(input, i);
+        i = start;
         if (input[i] == '"' || input[i] == '\'')
         {
-            char quote = input[i++];
+            char quote;
+            
+            quote = input[i++];
             start = i;
             while (input[i] && input[i] != quote)
                 i++;
             if (i > start)
-                ft_lstadd_back(&token->lexemes, ft_lstnew(ft_substr(input, start, i - start)));
+                ft_lstadd_back(lexemes, ft_lstnew(ft_substr(input, start, i - start)));
             if (input[i] == quote)
                 i++; 
         }
@@ -74,20 +117,9 @@ void get_lexemes(t_token *token, char *input)
             while (input[i] && input[i] != ' ' && input[i] != '"' && input[i] != '\'')
                 i++;
             if (i > start)
-                ft_lstadd_back(&token->lexemes, ft_lstnew(ft_substr(input, start, i - start)));
+                ft_lstadd_back(lexemes, ft_lstnew(ft_substr(input, start, i - start)));
         }
     }
-    tokenizing(token);
-} 
-
-void token_init(t_token *token, char *input)
-{
-    token->lexemes = NULL;
-    token->TOKEN_WORD = NULL;
-    token->TOKEN_PIPE = NULL;
-    token->TOKEN_REDIR_IN = NULL;
-    token->TOKEN_REDIR_OUT = NULL;
-    token->TOKEN_APPEND = NULL;
-    token->TOKEN_HEREDOC = NULL;
-    get_lexemes(token, input);
+    get_token_value(*lexemes, tokens);
 }
+
