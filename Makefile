@@ -8,7 +8,7 @@ INCLUDES = -I. -I$(LIBFT_DIR)
 LIBFT_DIR = libft
 LIBFT_LIB = $(LIBFT_DIR)/libft.a
 
-CFILES = minishell.c tokenizing.c parsing.c parsing_utils1.c cleaning.c 
+CFILES = minishell.c tokenizing.c parsing.c parsing_utils1.c cleaning.c
 OFILES = $(CFILES:.c=.o)
 
 .PHONY: all clean fclean re 

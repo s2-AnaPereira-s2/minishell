@@ -20,7 +20,8 @@ int main (int argc, char **envp)
     t_data data;
     t_cmd *cmd;
 
-    (void)argc;  // Mark as unused to avoid compiler warning
+    if (argc != 1)
+        return (1);
     tokens = NULL;
     lexemes = NULL;
     data.envp = envp;
@@ -38,7 +39,7 @@ int main (int argc, char **envp)
             parse_tokens(&tokens, &cmd);
         }
         free(input);
-        cleaning_func(&tokens, &lexemes);
+        cleaning_func(&tokens, &lexemes, &cmd);
         cmd_init(&cmd);
     }
     return 0;

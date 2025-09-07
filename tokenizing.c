@@ -12,26 +12,6 @@
 
 #include "parsing.h"
 
-/*const char *token_type_name(t_token_type type)
-{
-    if (type == TOKEN_WORD)        return "WORD";
-    if (type == TOKEN_PIPE)        return "PIPE";
-    if (type == TOKEN_REDIR_IN)    return "REDIR_IN";
-    if (type == TOKEN_REDIR_OUT)   return "REDIR_OUT";
-    if (type == TOKEN_APPEND)      return "APPEND";
-    if (type == TOKEN_HEREDOC)     return "HEREDOC";
-    return "UNKNOWN";
-}
-
-void print_tokens(t_tokens *tokens)
-{
-    while (tokens)
-    {
-        printf("Type=%s | Value=%s\n", token_type_name(tokens->type), tokens->value);
-        tokens = tokens->next;
-    }
-}*/
-
 
 void get_token_type(t_tokens *token_node)
 {

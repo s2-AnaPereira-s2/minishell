@@ -14,7 +14,8 @@
 
 void    cmd_init(t_cmd **cmd)
 {
-    if (!cmd)
+    *cmd = malloc(sizeof(t_cmd));
+    if (!*cmd)
         return;
     (*cmd)->args = NULL;
     (*cmd)->redir_in = NULL;
@@ -22,4 +23,26 @@ void    cmd_init(t_cmd **cmd)
     (*cmd)->append = NULL;
     (*cmd)->heredoc = NULL;
     (*cmd)->next = NULL;
+}
+
+char **args_array(t_list *args)
+{
+    int len;
+    char **args_array;
+    t_list *temp;
+    int i;
+
+    len = ft_lstsize(args);
+    args_array = malloc((len + 1) * sizeof(char *));
+    temp = args;
+    i = 0;
+    if (!args)
+        return NULL;
+    while (temp)
+    {
+        args_array[i++] = ft_strdup(temp->content);
+        temp = temp->next;
+    }
+    args_array[i] = NULL;
+    return (args_array);
 }
