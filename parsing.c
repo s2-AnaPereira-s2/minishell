@@ -6,7 +6,7 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 12:00:09 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/09/05 17:20:06 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/08 11:44:06 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,6 @@ void	parse_tokens(t_tokens **tokens, t_cmd **cmd)
             }
             (current_cmd)->append = ft_strdup(temp->next->value);
             temp = temp->next;
-            /*else
-            {
-                printf("Error: Missing filename after '>>'\n");
-                break;
-            }*/
         }
         else if (temp->type == TOKEN_HEREDOC)
         {

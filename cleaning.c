@@ -6,11 +6,26 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:47:28 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/09/05 17:14:52 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/08 11:01:51 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parsing.h"
+
+void	free_array(char **arr)
+{
+	int	i;
+
+	if (!arr)
+		return ;
+	i = 0;
+	while (arr[i])
+	{
+		free(arr[i]);
+		i++;
+	}
+	free(arr);
+}
 
 static void free_token_list(t_tokens **tokens)
 {
