@@ -6,7 +6,7 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:48:22 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/09/08 14:36:01 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/08 19:05:46 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ char **args_array(t_list *args)
 
     len = ft_lstsize(args);
     args_array = malloc((len + 1) * sizeof(char *));
+    if (!args_array)
+        return (NULL);
     temp = args;
     i = 0;
     if (!args)
@@ -91,6 +93,7 @@ void get_cmds_count(t_cmd **cmd, t_data *data)
    t_cmd *temp;
 
    temp = *cmd;
+   data->cmds = 0;
    while (temp)
    {
        data->cmds += 1;
@@ -98,18 +101,18 @@ void get_cmds_count(t_cmd **cmd, t_data *data)
    }
 }
 
-void    get_pipes_pids(t_cmd **cmd, t_list *pids, t_data *data)
+void    get_pipes_pids(t_cmd **cmd, t_data *data)
 {
     t_cmd *temp;
-    int i;
     
     temp = *cmd;
     data->pipefds = malloc(sizeof(int) * (2 * (data->cmds - 1)));
     if (!data->pipefds)
         return ;   
+    process_pids(data, temp->args);
 }
 
-void    process_pids(t_data *data)
+void    process_pids(t_data *data, t_list *args)
 {
     int i;
     
@@ -127,9 +130,13 @@ void    process_pids(t_data *data)
         }
         if (data->pids[i] == 0)
         {
-            execute();
+            execute_first(data, args);
+            perror("execve failed");
+            exit(EXIT_FAILURE);
         }
         i++;
     }
+    while(i-- > 0)
+        waitpid(data->pids[i], NULL, 0);
 }
 

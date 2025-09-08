@@ -6,7 +6,7 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:04:06 by gabrsouz          #+#    #+#             */
-/*   Updated: 2025/09/08 14:30:05 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/08 18:48:49 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_cmd
 
 typedef struct s_data
 {
+    char    **cmd_paths;
     char    **envp;
     char	**paths;
     char	*path;
@@ -65,6 +66,10 @@ void    cmd_init(t_cmd **cmd);
 void cleaning_func(t_tokens **tokens, t_list **lexemes, t_cmd **cmd);
 char	*find_path(t_list *args, t_data *data);
 void	free_array(char **arr);
-void    get_pipes_pids(t_cmd **cmd, t_list *pids, t_data *data);
+void    get_pipes_pids(t_cmd **cmd, t_data *data);
+char **args_array(t_list *args);
+void	execute_first(t_data *data, t_list *args);
+void    process_pids(t_data *data, t_list *args);
+void get_cmds_count(t_cmd **cmd, t_data *data);
 
 #endif
