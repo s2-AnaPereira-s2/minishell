@@ -6,7 +6,7 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 18:42:57 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/09/05 11:39:28 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/10 12:20:29 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ void    get_token_value(t_list *lexemes, t_tokens **tokens)
         last = token_node;
         temp = temp->next;
     }
-    //print_tokens(*tokens);
 }
 
 int get_start(char *input, int i)

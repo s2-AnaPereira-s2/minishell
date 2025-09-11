@@ -6,7 +6,7 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 18:44:46 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/09/08 18:47:13 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/10 16:54:54 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ int main (int argc, char **argv, char **envp)
                 args_temp = temp->args;
                 while (args_temp)
                 {
-                    printf("Arg: %s\n", (char *)args_temp->content);
                     data.cmd_paths[i] = find_path(args_temp, &data);
                     break ;
                 }
@@ -59,7 +58,7 @@ int main (int argc, char **argv, char **envp)
                 temp = temp->next;
             }
             data.cmd_paths[i] = NULL;
-            get_pipes_pids(&cmd, &data);
+            get_pipefds(&cmd, &data);
         }
         free(input);
         cleaning_func(&tokens, &lexemes, &cmd);

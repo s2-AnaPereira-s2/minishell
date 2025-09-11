@@ -6,7 +6,7 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:47:28 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/09/08 11:01:51 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/11 14:46:58 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ static void free_cmd_list(t_cmd **cmd)
         next = temp->next;
         if (temp->args)
             ft_lstclear(&(temp->args), free);
-        free(temp->redir_in);
-        free(temp->redir_out);
-        free(temp->append);
-        free(temp->heredoc);
+        free(temp->redir_in_file);
+        free(temp->redir_out_file);
+        free(temp->append_file);
+        free(temp->heredoc_limiter);
         free(temp);
         temp = next;
     }

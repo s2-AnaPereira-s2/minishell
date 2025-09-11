@@ -6,7 +6,7 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 12:00:09 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/09/08 11:44:06 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/11 15:19:16 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,42 +33,42 @@ void	parse_tokens(t_tokens **tokens, t_cmd **cmd)
         }
         else if (temp->type == TOKEN_REDIR_IN)
         {
-            if (!temp->next)
+            if (!temp->next || temp->next->type != TOKEN_WORD)
             {
                 printf("Error: Missing filename after '<'\n");
                 return ;
             }
-            (current_cmd)->redir_in = ft_strdup(temp->next->value);
+            (current_cmd)->redir_in_file = ft_strdup(temp->next->value);
             temp = temp->next;
         }
         else if (temp->type == TOKEN_REDIR_OUT)
         {
-            if (!temp->next)
+            if (!temp->next || temp->next->type != TOKEN_WORD)
             {
                 printf("Error: Missing filename after '>'\n");
                 return ;
             }
-            (current_cmd)->redir_out = ft_strdup(temp->next->value);
+            (current_cmd)->redir_out_file = ft_strdup(temp->next->value);
             temp = temp->next;
         }
         else if (temp->type == TOKEN_APPEND)
         {
-            if (!temp->next)
+            if (!temp->next || temp->next->type != TOKEN_WORD)
             {
                 printf("Error: Missing filename after '>>'\n");
                 return ;
             }
-            (current_cmd)->append = ft_strdup(temp->next->value);
+            (current_cmd)->append_file = ft_strdup(temp->next->value);
             temp = temp->next;
         }
         else if (temp->type == TOKEN_HEREDOC)
         {
-            if (!temp->next)
+            if (!temp->next || temp->next->type != TOKEN_WORD)
             {
                 printf("Error: Missing delimiter after '<<'\n");
                 return ;
             }
-            (current_cmd)->heredoc = ft_strdup(temp->next->value);
+            (current_cmd)->heredoc_limiter = ft_strdup(temp->next->value);
             temp = temp->next;
         }
         else if (temp->type == TOKEN_PIPE)
@@ -95,17 +95,18 @@ void	parse_tokens(t_tokens **tokens, t_cmd **cmd)
             printf(" - %s\n", (char *)arg->content);
             arg = arg->next;
         }
-        if (c->redir_in)
-            printf("Input redirection: %s\n", c->redir_in);
-        if (c->redir_out)
-            printf("Output redirection: %s\n", c->redir_out);
-        if (c->append)
-            printf("Append redirection: %s\n", c->append);
-        if (c->heredoc)
-            printf("Heredoc: %s\n", c->heredoc);
+        if (c->redir_in_file)
+            printf("Input redirection: %s\n", c->redir_in_file);
+        if (c->redir_out_file)
+            printf("Output redirection: %s\n", c->redir_out_file);
+        if (c->append_file)
+            printf("Append redirection: %s\n", c->append_file);
+        if (c->heredoc_limiter)
+            printf("Heredoc: %s\n", c->heredoc_limiter);
         c = c->next;
     }
     */
+    
 }
 
 

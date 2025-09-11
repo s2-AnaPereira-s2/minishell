@@ -6,7 +6,7 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:48:22 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/09/08 19:05:46 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/11 13:19:12 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void    cmd_init(t_cmd **cmd)
     if (!*cmd)
         return;
     (*cmd)->args = NULL;
-    (*cmd)->redir_in = NULL;
-    (*cmd)->redir_out = NULL;
-    (*cmd)->append = NULL;
-    (*cmd)->heredoc = NULL;
+    (*cmd)->redir_in_file = NULL;
+    (*cmd)->redir_out_file = NULL;
+    (*cmd)->append_file = NULL;
+    (*cmd)->heredoc_limiter = NULL;
     (*cmd)->next = NULL;
 }
 
@@ -88,55 +88,5 @@ char	*find_path(t_list *args, t_data *data)
 	return (free_array(data->paths), NULL);
 }
 
-void get_cmds_count(t_cmd **cmd, t_data *data)
-{
-   t_cmd *temp;
 
-   temp = *cmd;
-   data->cmds = 0;
-   while (temp)
-   {
-       data->cmds += 1;
-       temp = temp->next;
-   }
-}
-
-void    get_pipes_pids(t_cmd **cmd, t_data *data)
-{
-    t_cmd *temp;
-    
-    temp = *cmd;
-    data->pipefds = malloc(sizeof(int) * (2 * (data->cmds - 1)));
-    if (!data->pipefds)
-        return ;   
-    process_pids(data, temp->args);
-}
-
-void    process_pids(t_data *data, t_list *args)
-{
-    int i;
-    
-    data->pids = malloc(sizeof(pid_t) * data->cmds);
-    if (!data->pids)
-        return ;
-    i = 0;
-    while(i < data->cmds)
-    {
-        data->pids[i] = fork();
-        if (data->pids[i] < 0)
-        {
-            perror("Fork failed");
-            return ;
-        }
-        if (data->pids[i] == 0)
-        {
-            execute_first(data, args);
-            perror("execve failed");
-            exit(EXIT_FAILURE);
-        }
-        i++;
-    }
-    while(i-- > 0)
-        waitpid(data->pids[i], NULL, 0);
-}
 

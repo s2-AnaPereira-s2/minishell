@@ -6,7 +6,7 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:04:06 by gabrsouz          #+#    #+#             */
-/*   Updated: 2025/09/08 18:48:49 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/11 15:19:38 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ typedef struct s_tokens
 typedef struct s_cmd
 {
     t_list        *args;      
-    char        *redir_in;   
-    char        *redir_out;  
-    char        *append;     
-    char        *heredoc;    
+    char        *redir_in_file;   
+    char        *redir_out_file;  
+    char        *append_file;     
+    char        *heredoc_limiter;    
     struct s_cmd *next;  
 } t_cmd;
 
@@ -66,9 +66,10 @@ void    cmd_init(t_cmd **cmd);
 void cleaning_func(t_tokens **tokens, t_list **lexemes, t_cmd **cmd);
 char	*find_path(t_list *args, t_data *data);
 void	free_array(char **arr);
-void    get_pipes_pids(t_cmd **cmd, t_data *data);
+void    get_pipefds(t_cmd **cmd, t_data *data);
 char **args_array(t_list *args);
-void	execute_first(t_data *data, t_list *args);
+void	execute_one_cmd(t_data *data, t_list *args);
+void    execute_basic_cmds(t_data *data, t_list *args, int cmd_index);
 void    process_pids(t_data *data, t_list *args);
 void get_cmds_count(t_cmd **cmd, t_data *data);
 
