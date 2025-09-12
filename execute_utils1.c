@@ -6,7 +6,7 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:13:52 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/09/12 15:17:02 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/12 18:58:16 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,22 @@ void get_cmds_count(t_cmd **cmd, t_data *data)
 void    get_pipefds(t_cmd **cmd, t_data *data)
 {
     t_cmd *temp;
+    int i;
     
     temp = *cmd;
     data->pipefds = malloc(sizeof(int) * (2 * (data->cmds - 1)));
     if (!data->pipefds)
-        return ;   
+        return ;
+    i = 0;
+    while (i < data->cmds - 1)
+    {
+        if (pipe(&data->pipefds[i * 2]) < 0)
+        {
+            perror("pipe failed");
+            return;
+        }
+        i++;
+    }
 }
 
 void    process_pids(t_data *data, t_cmd **cmd)
@@ -72,6 +83,7 @@ void    process_pids(t_data *data, t_cmd **cmd)
             }
             if (data->pids[i] == 0)
             {
+                printf("I'm here executing command\n");
                 execute_basic_cmds(cmd, data, i);
                 perror("execve failed");
                 exit(EXIT_FAILURE);

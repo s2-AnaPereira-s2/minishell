@@ -6,7 +6,7 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 18:44:46 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/09/12 17:18:26 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/12 19:25:57 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,15 @@ int main (int argc, char **argv, char **envp)
     int i;
 
     (void)argv;
-    (void)argc;  // Mark as unused to avoid compiler warning
+    (void)argc;
     tokens = NULL;
     lexemes = NULL;
     data.envp = envp;
     cmd_init(&cmd);
-    len = ft_lstsize(cmd->args);
-    (*cmd).args_array = malloc((len + 1) * sizeof(char *));
-    if (!(*cmd).args_array)
-        return (1);
-    cmd->index_args_array = 0;
     i = 0;
 	while (1)  
 	{
+        cmd->index_args_array = 0;
         input = readline("bbshell> ");
         if (!input)
             break;
@@ -46,6 +42,10 @@ int main (int argc, char **argv, char **envp)
             add_history(input);
             get_lexemes(&lexemes, &tokens, input);
             parse_tokens(&tokens, &cmd);
+            len = ft_lstsize(cmd->args);
+            (*cmd).args_array = malloc((len + 1) * sizeof(char *));
+            if (!(*cmd).args_array)
+                return (1);
             get_cmds_count(&cmd, &data);
             data.cmd_paths = malloc((data.cmds + 1) * sizeof(char *));
             if (!data.cmd_paths)
@@ -57,8 +57,9 @@ int main (int argc, char **argv, char **envp)
                 while (args_temp)
                 {
                     printf("Finding path for command: %s\n", (char *)args_temp->content);
-                    data.cmd_paths[i] = find_path(args_temp, &data);
                     args_to_array(&cmd, args_temp);
+                    data.cmd_paths[i] = find_path(args_temp, &data);
+                    printf("I'm here inside loop\n");
                     break ;
                 }
                 i++;

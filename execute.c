@@ -6,7 +6,7 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 14:44:12 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/09/12 15:38:02 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/12 19:06:36 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,15 @@ void	execute_one_cmd(t_cmd **cmd, t_data *data)
 void    execute_basic_cmds(t_cmd **cmd, t_data *data, int cmd_index)
 {
     int i;
+    t_cmd *current_cmd;
 
+    current_cmd = *cmd;
+    i = 0;
+    while (i < cmd_index && current_cmd)
+    {
+        current_cmd = current_cmd->next;
+        i++;
+    }
     if (cmd_index == 0)
     {
         dup2(data->pipefds[1], 1);
@@ -40,7 +48,7 @@ void    execute_basic_cmds(t_cmd **cmd, t_data *data, int cmd_index)
         close(data->pipefds[i]);
         i++;
     }
-    execve(data->cmd_paths[cmd_index], (*cmd)->args_array, data->envp);
+    execve(data->cmd_paths[cmd_index], current_cmd->args_array, data->envp);
     perror("execve failed");
     exit(EXIT_FAILURE);
 }
