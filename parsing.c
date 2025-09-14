@@ -6,7 +6,7 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 12:00:09 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/09/11 15:19:16 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/14 17:50:08 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ void	parse_tokens(t_tokens **tokens, t_cmd **cmd)
         c = c->next;
     }
     */
-    
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:48:22 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/09/12 17:17:41 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/14 14:52:37 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,27 @@ void    cmd_init(t_cmd **cmd)
     (*cmd)->next = NULL;
 }
 
-char **args_to_array(t_cmd **cmd, t_list *args)
+char **args_to_array(t_cmd **cmd)
 {
     t_list *temp;
-
+    int len;
+    int i;
+    
+    i = 0;  
+    len = ft_lstsize((*cmd)->args);
+    (*cmd)->args_array = malloc((len + 1) * sizeof(char *));
     if (!(*cmd)->args_array)
         return (NULL);
-    temp = args;
-    if (!args)
-        return NULL;
+    temp = (*cmd)->args;
+    if (!temp)
+        return (NULL);
     while (temp)
     {
         printf("Adding to args_array: %s\n", (char *)temp->content);
-        printf("Current index: %d\n", (*cmd)->index_args_array);
-        (*cmd)->args_array[(*cmd)->index_args_array] = ft_strdup(temp->content);
-        (*cmd)->index_args_array++;
+        (*cmd)->args_array[i++] = ft_strdup(temp->content);  
         temp = temp->next;
     }
+    (*cmd)->args_array[i] = NULL;  
     return ((*cmd)->args_array);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 18:44:46 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/09/12 19:25:57 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/14 15:00:30 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int main (int argc, char **argv, char **envp)
     t_cmd *cmd;
     t_cmd *temp;
     t_list *args_temp;
-    int len;
     int i;
 
     (void)argv;
@@ -30,9 +29,9 @@ int main (int argc, char **argv, char **envp)
     lexemes = NULL;
     data.envp = envp;
     cmd_init(&cmd);
-    i = 0;
 	while (1)  
 	{
+        i = 0;
         cmd->index_args_array = 0;
         input = readline("bbshell> ");
         if (!input)
@@ -42,10 +41,6 @@ int main (int argc, char **argv, char **envp)
             add_history(input);
             get_lexemes(&lexemes, &tokens, input);
             parse_tokens(&tokens, &cmd);
-            len = ft_lstsize(cmd->args);
-            (*cmd).args_array = malloc((len + 1) * sizeof(char *));
-            if (!(*cmd).args_array)
-                return (1);
             get_cmds_count(&cmd, &data);
             data.cmd_paths = malloc((data.cmds + 1) * sizeof(char *));
             if (!data.cmd_paths)
@@ -54,18 +49,15 @@ int main (int argc, char **argv, char **envp)
             while (temp)
             {
                 args_temp = temp->args;
-                while (args_temp)
-                {
-                    printf("Finding path for command: %s\n", (char *)args_temp->content);
-                    args_to_array(&cmd, args_temp);
-                    data.cmd_paths[i] = find_path(args_temp, &data);
-                    printf("I'm here inside loop\n");
-                    break ;
-                }
+                printf("Finding path for command: %s\n", (char *)args_temp->content);
+                temp->args_array = args_to_array(&temp); 
+                data.cmd_paths[i] = find_path(args_temp, &data);
+                printf("Command path: %s\n", data.cmd_paths[i]);
+                printf("I'm here inside loop\n");
                 i++;
                 temp = temp->next;
             }
-            (*cmd).args_array[(*cmd).index_args_array] = NULL;
+            printf("index %d\n", i);
             data.cmd_paths[i] = NULL;
             get_pipefds(&cmd, &data);
             process_pids(&data, &cmd);

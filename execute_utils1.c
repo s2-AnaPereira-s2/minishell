@@ -6,7 +6,7 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/11 13:13:52 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/09/12 18:58:16 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/14 15:02:33 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void    process_pids(t_data *data, t_cmd **cmd)
         }
         if (data->pids[0] == 0)
         {
+            printf("I'm here executing command\n");
             execute_one_cmd(cmd, data);
             perror("execve failed");
             exit(EXIT_FAILURE);
@@ -88,6 +89,12 @@ void    process_pids(t_data *data, t_cmd **cmd)
                 perror("execve failed");
                 exit(EXIT_FAILURE);
             }
+            i++;
+        }
+        i = 0;
+        while(i < 2 * (data->cmds - 1))
+        {
+            close(data->pipefds[i]);
             i++;
         }
         i = 0;
