@@ -6,7 +6,7 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 14:04:06 by gabrsouz          #+#    #+#             */
-/*   Updated: 2025/09/14 17:21:11 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/15 15:06:34 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ typedef struct s_cmd
     char        *redir_in_file;   
     char        *redir_out_file;  
     char        *append_file;     
-    char        *heredoc_limiter;
-    int       check;    
+    char        *heredoc_limiter;   
     struct s_cmd *next;  
 } t_cmd;
 
@@ -62,8 +61,10 @@ typedef struct s_data
     pid_t	*pids;
 } t_data;
 
-
 void get_lexemes(t_list **lexemes, t_tokens **tokens, char *input);
+void    get_expand_lexemes(t_list **lexemes, char *input);
+void    get_normal_lexemes(t_list **lexemes, char *input);
+int dollar_sign_check(char *input);
 void	parse_tokens(t_tokens **tokens, t_cmd **cmd);
 void    cmd_init(t_cmd **cmd);
 void cleaning_func(t_tokens **tokens, t_list **lexemes, t_cmd **cmd);
@@ -75,7 +76,7 @@ char **args_to_array(t_cmd **cmd);
 void	free_array(char **arr);
 void	execute_one_cmd(t_cmd **cmd, t_data *data);
 void    execute_basic_cmds(t_cmd **cmd, t_data *data, int cmd_index);
-
-
+void free_cmd_list(t_cmd **cmd);
+void free_data(t_data *data);
 
 #endif

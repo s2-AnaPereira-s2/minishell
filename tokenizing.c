@@ -6,7 +6,7 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/03 18:42:57 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/09/14 17:49:48 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/14 19:02:16 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,96 +55,6 @@ void    get_token_value(t_list *lexemes, t_tokens **tokens)
             last->next = token_node;
         last = token_node;
         temp = temp->next;
-    }
-}
-
-int get_start(char *input, int i)
-{
-    int start;
-
-    while (input[i] && input[i] == ' ')
-        i++;
-    start = i;
-    return start;
-}
-
-int dollar_sign_check(char *input)
-{
-    int i;
-
-    i = 0;
-    while(input[i])
-    {
-        if (input[i] == '$')
-            return (1);
-        i++;
-    }
-    return (0);
-}
-
-void    get_normal_lexemes(t_list **lexemes, char *input)
-{
-    int i;
-    int start;
-
-    i = 0;
-    while (input[i])
-    {
-        start = get_start(input, i);
-        i = start;
-        if (input[i] == '"' || input[i] == '\'')
-        {
-            char quote;
-            
-            quote = input[i++];
-            start = i;
-            while (input[i] && input[i] != quote)
-                i++;
-            if (i > start)
-                ft_lstadd_back(lexemes, ft_lstnew(ft_substr(input, start, i - start)));
-            if (input[i] == quote)
-                i++; 
-        }
-        else 
-        {
-            while (input[i] && input[i] != ' ' && input[i] != '"' && input[i] != '\'')
-                i++;
-            if (i > start)
-                ft_lstadd_back(lexemes, ft_lstnew(ft_substr(input, start, i - start)));
-        }
-    }
-}
-
-void    get_expand_lexemes(t_list **lexemes, char *input)
-{
-    int i;
-    int start;
-
-    i = 0;
-    while (input[i])
-    {
-        start = get_start(input, i);
-        i = start;
-        if (input[i] == '"' || input[i] == '\'')
-        {
-            char quote;
-            
-            quote = input[i++];
-            start = i - 1;
-            while (input[i] && input[i] != quote)
-                i++;
-            if (i > start)
-                ft_lstadd_back(lexemes, ft_lstnew(ft_substr(input, start, (i - start) + 1)));
-            if (input[i] == quote)
-                i++; 
-        }
-        else 
-        {
-            while (input[i] && input[i] != ' ' && input[i] != '"' && input[i] != '\'')
-                i++;
-            if (i > start)
-                ft_lstadd_back(lexemes, ft_lstnew(ft_substr(input, start, i - start)));
-        }
     }
 }
 

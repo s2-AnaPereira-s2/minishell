@@ -6,7 +6,7 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 16:47:28 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/09/12 13:31:57 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/15 16:54:32 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static void free_token_list(t_tokens **tokens)
     *tokens = NULL;
 }
 
-static void free_cmd_list(t_cmd **cmd)
+void free_cmd_list(t_cmd **cmd)
 {
     t_cmd *temp;
     t_cmd *next;
@@ -54,6 +54,8 @@ static void free_cmd_list(t_cmd **cmd)
         next = temp->next;
         if (temp->args)
             ft_lstclear(&(temp->args), free);
+        if (temp->args_array)
+            free_array(temp->args_array);
         free(temp->redir_in_file);
         free(temp->redir_out_file);
         free(temp->append_file);
@@ -62,6 +64,16 @@ static void free_cmd_list(t_cmd **cmd)
         temp = next;
     }
     *cmd = NULL;
+}
+
+void free_data(t_data *data)
+{
+    if (!data)
+        return;
+    free_array(data->cmd_paths);
+    free(data->path);
+    free(data->pipefds);
+    free(data->pids);
 }
 
 void cleaning_func(t_tokens **tokens, t_list **lexemes, t_cmd **cmd)

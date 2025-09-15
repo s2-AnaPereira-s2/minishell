@@ -6,7 +6,7 @@
 /*   By: ana-pdos <ana-pdos@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 14:44:12 by ana-pdos          #+#    #+#             */
-/*   Updated: 2025/09/14 15:12:30 by ana-pdos         ###   ########.fr       */
+/*   Updated: 2025/09/14 18:52:27 by ana-pdos         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	execute_one_cmd(t_cmd **cmd, t_data *data)
 {
-    printf("Executing command: %s\n", (*cmd)->args_array[0]);
-    printf("Command path: %s\n", data->cmd_paths[0]);
 	execve(data->cmd_paths[0], (*cmd)->args_array, data->envp);
 }
 
@@ -32,13 +30,9 @@ void    execute_basic_cmds(t_cmd **cmd, t_data *data, int cmd_index)
         i++;
     }
     if (cmd_index == 0)
-    {
         dup2(data->pipefds[1], 1);
-    }
     else if (cmd_index == data->cmds - 1)
-    {
         dup2(data->pipefds[2 * (cmd_index - 1)], 0);
-    }
     else
     {
         dup2(data->pipefds[2 * (cmd_index - 1)], 0);
@@ -46,10 +40,7 @@ void    execute_basic_cmds(t_cmd **cmd, t_data *data, int cmd_index)
     }
     i = 0;
     while (i < (data->cmds - 1) * 2)
-    {
-        close(data->pipefds[i]);
-        i++;
-    }
+        close(data->pipefds[i++]);
     execve(data->cmd_paths[cmd_index], current_cmd->args_array, data->envp);
     perror("execve failed");
     exit(EXIT_FAILURE);
